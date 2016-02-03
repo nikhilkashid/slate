@@ -84,7 +84,7 @@ To use this library in your android project, just simply add the following depen
  
     {  <br>
  
- &emsp;     compile 'in.coinn:coinn_delivery_sdk:0.1.5'<br>
+ &emsp;     compile 'in.coinn:coinn_delivery_sdk:0.1.6'<br>
  
  }
 
@@ -148,7 +148,7 @@ coinnClient.registerAtCoinn("9619020263", "Nikhil", "nikhil@delivery.in");
  - where Second Parameter is Name of delivery boy
  - where Third Parameter is Email-ID of delivery boy (optional)
 
-2.  Update location of delivery boy. This needs to be called whenever there is a change in the delivery boys location (onLocationChanged()). This call ensures that we have the updated location of the delivery boy and whenever the delivery boy is in vicinity of the customer, his device's bluetooth will be turned on in the background and the delivery boy can accept payments through Coinn from the customer. We recommend that this function is called whenever there is a change in location by 100 m or the last known location is  3 mins older.
+2.  Update location of delivery boy. This needs to be called whenever there is a change in the delivery boys location (onLocationChanged()). This call ensures that we have the updated location of the delivery boy and whenever the delivery boy is in vicinity of the customer, his device's bluetooth will be turned on in the background and the delivery boy can accept payments through Coinn from the customer. We recommend that location is updated and this function is called whenever there is a change in location by 100 m or the last known location is  3 mins older.
 
 <aside class="codetext">
         coinnClient.updateLocation(19.125051, 72.912406);
@@ -186,7 +186,7 @@ You must replace <code>CLIENT_ID:CLIENT_SECRET</code> with your personal API cli
 
 
 ```shell
-curl "http://52.74.124.11:8082/api/v2.1/order/"
+curl "http://52.74.124.11:9669/api/v2.1/order/"
 -H "Authorization: OAuth ce74318717114c6328d3:ffe2f53d62f443435f16e30e423921a4391127fb9"
 -H "Content-Type: application/json"
 -d 
@@ -236,7 +236,7 @@ curl "http://52.74.124.11:8082/api/v2.1/order/"
 This endpoint captures the order for which payment is to be collected post delivery. The POST request should be call when an order with post delivery payment is recieved and assigned to the delivery boy.
 ### HTTP Request
 
-`POST http://52.74.124.11:8082/api/v2.1/order/`
+`POST http://52.74.124.11:9669/api/v2.1/order/`
 
 ### Query Parameters
 
@@ -244,7 +244,7 @@ Parameter | Mandatory/Optional | Description
 --------- | ------- | -----------
 customer_phone | Mandatory | This phone number will be used to determine if the customer is a Coinn user and to notify him about the order and bill details
 delivery_boy_phone | Mandatory | This phone number will be used to identify the delivery guy assigned to deliver a particular order.
-bill_number | Optional | Unique identifier for each order which can be used to determine order related items such as order status for the corresponding order
+bill_number | Mandatory | Unique identifier provided by merchant for each order which can be used to determine order related items such as order status for the corresponding order
 delivery_location | Mandatory | Approximate Latitude and Longitude of the delivery location, to be provided as a JSON object. This will be used to trigger Coinn mode when delivery boy is in proximity of the delivery location
 vendor | Optional | Name of the third party vendor/aggregator of merchants eg:- TinyOwl/Foodpanda etc. This will be displayed to the customer on his Coinn app when he is ready to pay
 external_merchant | Mandatory | Name of the merchant on whose behalf the order is being delivered
@@ -262,7 +262,7 @@ Remember- The amount to be paid should be provided in Rupees"
 ## Update Order Status
 
 ```shell
-curl "http://52.74.124.11:8082/api/v2.1/order/61/"
+curl "http://52.74.124.11:9669/api/v2.1/order/61/"
 -H "Authorization: OAuth ce74318717114c6328d3:ffe2f53d62f443435f16e30e423921a4391127fb9"
 -H "Content-Type: application/json"
 -d '{"status_code":5,"order_status_reason ":"ok"}'
@@ -275,7 +275,7 @@ curl "http://52.74.124.11:8082/api/v2.1/order/61/"
    "added_on": "2016-01-28T12:51:04.370784",
    "app_installed": true,
    "bill_details": "",
-   "bill_number": "SINEsRDER2",
+   "bill_number": "ORDER1",
    "customer_email": null,
    "customer_phone": "+919619020263",
    "delivery_boy_phone": "+919455821330",
@@ -307,7 +307,7 @@ This endpoint updates the order status. This api is to be called to update the o
 
 ### HTTP Request
 
-`PATCH http://52.74.124.11:8082/api/v2.1/order/61/<ID>`
+`PATCH http://52.74.124.11:9669/api/v2.1/order/61/<ID>`
 
 ### URL Parameters
 
@@ -325,14 +325,20 @@ curl "http://http://52.74.124.11/test.php"
 -H "Content-Type: application/json"
 -H "Accept: * / *"
 -d 
-' {
-    "order_status": "COMPLETED", 
-    "status_code": 1
-    "uuid": "28bae79754f549a885a9f1a6b7db38ac", 
-    "payment": "1220.00"
-   }'
+'{
+    "order_status": 
+        {
+            "description": "Order completed. Payment done.",
+            "status": "COMPLETED",
+            "status_code": 1
+        }, 
+    "uuid": "39518bd8f76e4a8bb7939f670ffb1f1b", 
+    "payment": "2.00", 
+    "transaction_amount":"2.00",
+    "bill_number":"ORDER1"
+  }'
 ```
-> The above command will be Posted by Coinn on completion of transaction
+> The above command will be Posted by Coinn on completion of transaction. In this POST request, the key "payment" gives amount to be collected entered during order creation. "transaction_amount" is the amount paid by the customer through Coinn.
 
 Return URL is where Coinn sends the data related to transactions so that you can check the status of the transaction. On completion of every transaction through Coinn this url will be called to post the transaction status. This URL can be configured in [Settings](http://example.com/developers)
 This page is to be hosted on your server to enable Coinn to post notifications regarding the transaction when it is completed. The status will be sent as a POST request with JSON body to the configured URL 
@@ -366,7 +372,7 @@ Status Code | Status | Description
 2 | CANCELLED | This indicates that the user had initiated the payment and canclled it later before completing the authorisation. In such a case, the update order status request (mentioned above) should be called from merchant server to mark the order as completed
 3 | FAILED | This indicates that the customer had intiated the transaction but the transaction failed midway. In this case the order will be considered as comlpeted
 4 | PARTIAL_COMPLETED | This indicates that the order amount was partially payed by Coinn and rest was paid by cash by the customer
-5 | COMPLETED-CASH_PAYMENT | This indicates that the order amount was entirely payed by Cash
+5 | COMPLETED_CASH_PAYMENT | This indicates that the order amount was entirely payed by Cash
 
 # Error Codes
 

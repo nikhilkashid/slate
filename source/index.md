@@ -57,7 +57,9 @@ Once the delivery boy is at customer location, customer will be able to see Merc
 
 # Libraries and Integration
 
-We have SDK for android which should be integrated with the delivery boy app to accept payments through Coinn. Please follow the steps given below to integrate Coinn SDK in your app and start accepting payments through Coinn.
+We have SDK for android which should be integrated with the delivery boy app to accept payments through Coinn. Please follow the steps given below to integrate Coinn SDK in your app and start accepting payments through Coinn. 
+
+You can find the sample app at - https://github.com/coinnpayments/coinn-delivery-sdk-sample
 
 ## Installation
 

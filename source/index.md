@@ -107,12 +107,12 @@ Integrating Coinn SDK requires following permissions for different aspects of li
  <br>    &lt;!-- Permission to acess the last known location of the delivery boy --&gt;<br>
      &lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;<br>
     &lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;<br>
-
-
 </aside>
 
+
 <aside class="notice">
-Please ensure all the permissions are granted for mobile devices running on Marshmallow </aside>
+Please ensure all the permissions are granted for mobile devices running on Marshmallow
+</aside>
 
 ## Usage
 
@@ -138,7 +138,7 @@ where Client ID is 4e074b1492218f8f4af2 and Client Secret is 7fc19dc5355cbbb8c75
 
 To start accepting payments through Coinn, please follow the following steps to complete the integration
 
-1. Send delivery boy info to Coinn. With this call we will check if the delivery boy is registered with Coinn to start accepting payments through Coinn. If the user is not registered with Coinn, he/she will be registered when the below mentioned function is called. This function is to be called whenever delivery boy logins to delivery boy app
+1. Send delivery boy info to Coinn. With this call we will check if the delivery boy is registered with Coinn to start accepting payments through Coinn. If the user is not registered with Coinn, he/she will be registered when the below mentioned function is called. This function is to be called whenever delivery boy logins to delivery boy app. We recommend that this function is called whenever there is a change in location by 100 m or the last known location is  3 mins older.
  
 <aside class="codetext">
 coinnClient.registerAtCoinn("9619020263", "Nikhil", "nikhil@delivery.in"); 

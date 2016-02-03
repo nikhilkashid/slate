@@ -138,7 +138,7 @@ where Client ID is 4e074b1492218f8f4af2 and Client Secret is 7fc19dc5355cbbb8c75
 
 To start accepting payments through Coinn, please follow the following steps to complete the integration
 
-1. Send delivery boy info to Coinn. With this call we will check if the delivery boy is registered with Coinn to start accepting payments through Coinn. If the user is not registered with Coinn, he/she will be registered when the below mentioned function is called. This function is to be called whenever delivery boy logins to delivery boy app. We recommend that this function is called whenever there is a change in location by 100 m or the last known location is  3 mins older.
+1. Send delivery boy info to Coinn. With this call we will check if the delivery boy is registered with Coinn to start accepting payments through Coinn. If the user is not registered with Coinn, he/she will be registered when the below mentioned function is called. This function is to be called whenever delivery boy logins to delivery boy app. 
  
 <aside class="codetext">
 coinnClient.registerAtCoinn("9619020263", "Nikhil", "nikhil@delivery.in"); 
@@ -148,7 +148,7 @@ coinnClient.registerAtCoinn("9619020263", "Nikhil", "nikhil@delivery.in");
  - where Second Parameter is Name of delivery boy
  - where Third Parameter is Email-ID of delivery boy (optional)
 
-2.  Update location of delivery boy. This needs to be called whenever there is a change in the delivery boys location (onLocationChanged()). This call ensures that we have the updated location of the delivery boy and whenever the delivery boy is in vicinity of the customer, his device's bluetooth will be turned on in the background and the delivery boy can accept payments through Coinn from the customer.
+2.  Update location of delivery boy. This needs to be called whenever there is a change in the delivery boys location (onLocationChanged()). This call ensures that we have the updated location of the delivery boy and whenever the delivery boy is in vicinity of the customer, his device's bluetooth will be turned on in the background and the delivery boy can accept payments through Coinn from the customer. We recommend that this function is called whenever there is a change in location by 100 m or the last known location is  3 mins older.
 
 <aside class="codetext">
         coinnClient.updateLocation(19.125051, 72.912406);

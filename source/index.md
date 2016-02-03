@@ -37,7 +37,7 @@ The process of accepting payments from your end customers is as follows:
 
 # Payment Flow
 
-It is required that the Coinn delivery SDK for Android is integrated with the app provided to the delivery boy. Once the integrations is completed, below mentioned flow is followed:
+It is required that the Coinn delivery SDK for Android is integrated with the app provided to the delivery boy. Once the integration is completed, below mentioned flow is followed:
 
 **Register Mobile Device** 
 
@@ -59,62 +59,62 @@ Once the delivery boy is at customer location, customer will be able to see Merc
 
 We have SDK for android which should be integrated with the delivery boy app to accept payments through Coinn. Please follow the steps given below to integrate Coinn SDK in your app and start accepting payments through Coinn. 
 
-You can find the sample app at - https://github.com/coinnpayments/coinn-delivery-sdk-sample
+You can find the sample app at - [Coinn Delivery SDK Sample App](https://github.com/coinnpayments/coinn-delivery-sdk-sample)
 
 ## Installation
 
 Please be sure to keep your app up to date with the latest version of the SDK. All releases follow semantic versioning. Make sure you have a jcenter( ) / mavenCentral( ) entry in your repositories like :
 
-<aside class="codetext">
+    <aside class="codetext">
 
- repositories  <br>
- 
-    {  <br>
- 
- &emsp; jcenter( ) <br>
- 
- }
+     repositories  <br>
 
-</aside>
+        {  <br>
+
+     &emsp; jcenter( ) <br>
+
+     }
+
+    </aside>
    
 
 To use this library in your android project, just simply add the following dependency into your build.gradle
 
-<aside class="codetext">
+    <aside class="codetext">
 
- dependencies  <br>
- 
-    {  <br>
- 
- &emsp;     compile 'in.coinn:coinn_delivery_sdk:0.1.6'<br>
- 
- }
+     dependencies  <br>
 
-</aside>
+        {  <br>
+
+     &emsp;     compile 'in.coinn:coinn_delivery_sdk:0.1.6'<br>
+
+     }
+
+    </aside>
 
 ## Permissions
 
 Integrating Coinn SDK requires following permissions for different aspects of library. The following needs to be added in AndroidManifest.xml file 
 
-<aside class="codetext">
+    <aside class="codetext">
 
-  <br>&lt;!--  Permission to manage Bluetooth settings of the device - -&gt;<br>
-    <br>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;<br>
-    &lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;<br>
-    &lt;uses-permission android:name="android.permission.READ_PHONE_STATE" /&gt;<br>
+      <br>&lt;!--  Permission to manage Bluetooth settings of the device - -&gt;<br>
+        <br>&lt;uses-permission android:name="android.permission.BLUETOOTH" /&gt;<br>
+        &lt;uses-permission android:name="android.permission.BLUETOOTH_ADMIN" /&gt;<br>
+        &lt;uses-permission android:name="android.permission.READ_PHONE_STATE" /&gt;<br>
 
-    <br>&lt;!-- Permission to connect to internet from the handset --&gt;<br>
-    &lt;uses-permission android:name="android.permission.INTERNET" /&gt;<br>
+        <br>&lt;!-- Permission to connect to internet from the handset --&gt;<br>
+        &lt;uses-permission android:name="android.permission.INTERNET" /&gt;<br>
 
- <br>    &lt;!-- Permission to acess the last known location of the delivery boy --&gt;<br>
-     &lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;<br>
-    &lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;<br>
-</aside>
+     <br>    &lt;!-- Permission to acess the last known location of the delivery boy --&gt;<br>
+         &lt;uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" /&gt;<br>
+        &lt;uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/&gt;<br>
+    </aside>
 
 
-<aside class="notice">
-Please ensure all the permissions are granted for mobile devices running on Marshmallow
-</aside>
+    <aside class="notice">
+    Please ensure all the permissions are granted for mobile devices running on Marshmallow
+    </aside>
 
 ## Usage
 
@@ -124,39 +124,40 @@ Once the library is installed in your Android project, the following needs to be
 
 1. Create an object for CoinnClient.
 
-<aside class="codetext">
- CoinnClient coinnClient = CoinnClient.getInstance(Context);
-</aside>
+    <aside class="codetext">
+     CoinnClient coinnClient = CoinnClient.getInstance(Context);
+    </aside>
 
-2. Pass merchant parameters to initialise the SDK. The paramesters includes Client ID, Client Secret and Environment 
+2. Pass merchant parameters to initialise the SDK. The parameters includes Client ID, Client Secret and Environment 
 
-<aside class="codetext">
-coinnClient.init("4e074b1492218f8f4af2", "7fc19dc5355cbbb8c754a61551301920d677c6ee", CoinnEnvironment.SANDBOX); 
-</aside>
+    <aside class="codetext">
+    coinnClient.init("4e074b1492218f8f4af2", "7fc19dc5355cbbb8c754a61551301920d677c6ee", CoinnEnvironment.SANDBOX); 
+    </aside>
 
-where Client ID is 4e074b1492218f8f4af2 and Client Secret is 7fc19dc5355cbbb8c754a61551301920d677c6ee
+        where Client ID is 4e074b1492218f8f4af2 and Client Secret is 7fc19dc5355cbbb8c754a61551301920d677c6ee
 
 ### Start accepting Payments
 
-To start accepting payments through Coinn, please follow the following steps to complete the integration
+Please follow the steps mentioned below to start accepting payments through Coinn
 
-1. Send delivery boy info to Coinn. With this call we will check if the delivery boy is registered with Coinn to start accepting payments through Coinn. If the user is not registered with Coinn, he/she will be registered when the below mentioned function is called. This function is to be called whenever delivery boy logins to delivery boy app. 
+1. Send delivery boy info to Coinn. With this call we will check if the delivery boy is registered with Coinn to start accepting payments through Coinn. If the user is not registered with Coinn, he/she will be registered when the below mentioned function is called. This function is to be called whenever delivery boy logs-in to delivery boy app. 
  
-<aside class="codetext">
-coinnClient.registerAtCoinn("9619020263", "Nikhil", "nikhil@delivery.in"); 
-</aside>
- 
- - where First Parameter is Mobile Number of delivery boy
- - where Second Parameter is Name of delivery boy
- - where Third Parameter is Email-ID of delivery boy (optional)
+    <aside class="codetext">
+    coinnClient.registerAtCoinn("9619020263", "Nikhil", "nikhil@delivery.in"); 
+    </aside>
+
+         - First Parameter is Mobile Number of delivery boy
+         - Second Parameter is Name of delivery boy
+         - Third Parameter is Email-ID of delivery boy (optional)
+
 
 2.  Update location of delivery boy. This needs to be called whenever there is a change in the delivery boys location (onLocationChanged()). This call ensures that we have the updated location of the delivery boy and whenever the delivery boy is in vicinity of the customer, his device's bluetooth will be turned on in the background and the delivery boy can accept payments through Coinn from the customer. We recommend that location is updated and this function is called whenever there is a change in location by 100 m or the last known location is  3 mins older.
 
-<aside class="codetext">
-        coinnClient.updateLocation(19.125051, 72.912406);
-</aside>
- - where First Parameter is Latitude. Value is of type Double
- - where First Parameter is Longitude. Value is of type Double
+    <aside class="codetext">
+            coinnClient.updateLocation(19.125051, 72.912406);
+    </aside>
+         - First Parameter is Latitude. Value is of type Double
+         - Second Parameter is Longitude. Value is of type Double
 
 # Authentication
 
@@ -170,7 +171,7 @@ curl "api_endpoint_here"
 
 > Make sure to replace `CLIENT_ID:CLIENT_SECRET` with your API client ID and secret.
 
-All the server side requests like create order, get order status, getting details of previous orders must be authenticated with Oauth auth using "client-id:client-secret" as the auth token. The API request header will look like the following:
+All the server side requests like create order, get order status, getting details of previous orders must be authenticated with Oauth authorisation using "client-id:client-secret" as the auth token. The API request header will look like the following:
 
 `Authorization: OAuth CLIENT_ID:CLIENT_SECRET`
 
@@ -371,10 +372,10 @@ Status Code | Status | Description
 --------- | ------- | -----------
 0 | STARTED |  This indicates that the order has been freshly created and no transaction has not started yet
 1 | COMPLETED | This indicates successful payment of the full amount and thus completion of the order
-2 | CANCELLED | This indicates that the user had initiated the payment and canclled it later before completing the authorisation. In such a case, the update order status request (mentioned above) should be called from merchant server to mark the order as completed
-3 | FAILED | This indicates that the customer had intiated the transaction but the transaction failed midway. In this case the order will be considered as comlpeted
+2 | CANCELLED | This indicates that the user had initiated the payment and canclled it later before completing the authorisation. In such a case, if the user settles the amount by cash, the update order status request (mentioned above) should be called from merchant server to mark the order as completed by cash payment (Status Code - 5)
+3 | FAILED | This indicates that the customer had intiated the transaction but the transaction failed midway.  In such a case, if the user settles the amount by cash, the update order status request (mentioned above) should be called from merchant server to mark the order as completed by cash payment (Status Code - 5)
 4 | PARTIAL_COMPLETED | This indicates that the order amount was partially payed by Coinn and rest was paid by cash by the customer
-5 | COMPLETED_CASH_PAYMENT | This indicates that the order amount was entirely payed by Cash
+5 | COMPLETED_CASH_PAYMENT | This indicates that the order amount was entirely paid by Cash
 
 # Error Codes
 
@@ -384,8 +385,8 @@ The Coinn API returns json with an error code and description in case of any err
 
 Status Code | Status | Description
 --------- | ------- | -----------
-200 | OK |  Transaction completd successfully 
+200 | OK |  Transaction completed successfully 
 400 | BAD REQUEST | Bad request to the API due to invalid field or wrong format etc
-401 | UNAUTHORIZED | Invalide authorisation 
+401 | UNAUTHORIZED | Invalid authorisation 
 404 | NOT FOUND | The requested URL was not found 
 502,500,504 | SERVER ERROR | Server side error or internal Coinn errors found and captured

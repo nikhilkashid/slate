@@ -84,7 +84,7 @@ To use this library in your android project, just simply add the following depen
  
     {  <br>
  
- &emsp;     compile 'in.coinn:coinn_delivery_sdk:0.1.1'<br>
+ &emsp;     compile 'in.coinn:coinn_delivery_sdk:0.1.5'<br>
  
  }
 
@@ -111,8 +111,9 @@ Integrating Coinn SDK requires following permissions for different aspects of li
 
 </aside>
 
-`
-`
+<aside class="notice">
+Please ensure all the permissions are granted for mobile devices running on Marshmallow </aside>
+
 ## Usage
 
 Once the library is installed in your Android project, the following needs to be implemented to start accepting payments through Coinn
